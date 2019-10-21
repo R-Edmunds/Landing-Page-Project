@@ -79,6 +79,26 @@ addDummySections();
 
 // Build menu
 
+function generateLinks() {
+  // query all section elements and generate nav links
+  const allSections  = document.querySelectorAll("section");
+  const docFragment = document.createDocumentFragment();
+
+  for (i of allSections) {
+    const newNavItem = document.createElement("li");
+    const h2Text = i.querySelector("h2").textContent;
+    newNavItem.innerHTML = (
+      `<a href="#${i.id}" class="menu__link">${h2Text}</a>`
+    );
+    docFragment.appendChild(newNavItem);
+  }
+
+  const nav = document.querySelector("ul#navbar__list");
+  nav.appendChild(docFragment);
+}
+
+generateLinks()
+
 function addDummyLinks() {
   // add dummy li links to nav element
   const docFragment = document.createDocumentFragment();
@@ -93,7 +113,7 @@ function addDummyLinks() {
   nav.appendChild(docFragment);
 }
 
-addDummyLinks();
+// addDummyLinks();
 
 // Scroll to section on link click
 
