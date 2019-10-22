@@ -91,6 +91,7 @@ generateLinks();
 // Add class 'active' to section when near top of viewport
 // check that the element centre, is inside the middle third of viewport
 function elementActiveToggle() {
+  console.log("firing!!!");
   function getSectionPositions() {
     // query section, build list from getElementPosition(element) func
     const sections = document.querySelectorAll("main section");
@@ -133,7 +134,9 @@ function elementActiveToggle() {
 // Set sections as active
 
 function elementActiveEvent() {
-  document.addEventListener("scroll", function() { elementActiveToggle(); });
+  document.addEventListener("scroll", function() {
+    window.setTimeout(elementActiveToggle(), 0);
+  });
 }
 
 elementActiveEvent();
