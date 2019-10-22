@@ -18,6 +18,8 @@
  *
 */
 
+const dummySectionCount = 6;
+
 
 /**
  * End Global Variables
@@ -25,6 +27,13 @@
  *
 */
 
+// return object containing centre of element relative to top of viewport, and element id
+function getElementPosition(element) {
+  const top = element.getBoundingClientRect().top;
+  const bottom = element.getBoundingClientRect().bottom;
+  const centre = (bottom - top) / 2 + top;
+  return {id: element.id, yCentre: centre};
+}
 
 /**
  * End Helper Functions
@@ -32,28 +41,10 @@
  *
 */
 
-// build the nav
-
-
-// Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- *
-*/
-
-// Build dummy sections
-
-function addDummySections() {
-  // add dummy sections to the main element
+// build n dummy sections to main element with for loop
+function addDummySections(n) {
   const docFragment = document.createDocumentFragment();
-
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= n; i++) {
     const newSectionElement = document.createElement("section");
     newSectionElement.innerHTML = (
       `
@@ -74,16 +65,13 @@ function addDummySections() {
   main.appendChild(docFragment);
 }
 
-addDummySections();
+addDummySections(dummySectionCount);
 
 
-// Build menu
-
+// query all section elements and generate nav links
 function generateLinks() {
-  // query all section elements and generate nav links
   const allSections  = document.querySelectorAll("section");
   const docFragment = document.createDocumentFragment();
-
   for (i of allSections) {
     const newNavItem = document.createElement("li");
     const h2Text = i.querySelector("h2").textContent;
@@ -97,24 +85,55 @@ function generateLinks() {
   nav.appendChild(docFragment);
 }
 
-generateLinks()
+generateLinks();
 
-function addDummyLinks() {
-  // add dummy li links to nav element
-  const docFragment = document.createDocumentFragment();
 
-  for (let i = 1; i <= 6; i++) {
-    const newNavItem = document.createElement("li");
-    newNavItem.innerHTML = `<a href="#section${i}" class="menu__link">Section ${i}</a>`
-    docFragment.appendChild(newNavItem);
+// Add class 'active' to section when near top of viewport
+// check that the element centre, is inside the middle third of viewport
+function elementActiveToggle() {
+  function getSectionPositions() {
+    // query section, build list from getElementPosition(element) func
+    const sections = document.querySelectorAll("main section");
+    let sectionCentres = [];
+    for (i of sections) {
+      sectionCentres.push(getElementPosition(i));
+    }
+    return sectionCentres;
   }
 
-  const nav = document.querySelector("ul#navbar__list");
-  nav.appendChild(docFragment);
+  const middleThird = {top: window.innerHeight / 3, bottom: (window.innerHeight / 3) * 2};
+  for (section of getSectionPositions()) {
+    const e = document.querySelector(`main section#${section.id}`);
+    if (section.yCentre > middleThird.top && section.yCentre < middleThird.bottom) {
+      e.classList.add("your-active-class");
+    } else {
+      e.classList.remove("your-active-class");
+    }
+  }
 }
 
-// addDummyLinks();
+
+// Scroll to anchor ID using scrollTO event
+
+
+
+
+
+
+
+/**
+ * End Main Functions
+ * Begin Events
+ *
+*/
+
 
 // Scroll to section on link click
 
 // Set sections as active
+
+function elementActiveEvent() {
+  document.addEventListener("scroll", function() { elementActiveToggle(); });
+}
+
+elementActiveEvent();
