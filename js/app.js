@@ -35,6 +35,19 @@ function getElementPosition(element) {
   return {id: element.id, yCentre: centre};
 }
 
+// toggle link active attr
+function toggleLinkActive(id) {
+  const anchors = document.querySelectorAll("nav a.menu__link");
+  for (anchor of anchors) {
+    const url = anchor.getAttribute("href");
+    if (url === "#" + id) {
+      anchor.classList.add("link__active");
+    } else {
+      anchor.classList.remove("link__active");
+    }
+  }
+}
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -91,7 +104,6 @@ generateLinks();
 // Add class 'active' to section when near top of viewport
 // check that the element centre, is inside the middle third of viewport
 function elementActiveToggle() {
-  console.log("firing!!!");
   function getSectionPositions() {
     // query section, build list from getElementPosition(element) func
     const sections = document.querySelectorAll("main section");
@@ -107,6 +119,7 @@ function elementActiveToggle() {
     const e = document.querySelector(`main section#${section.id}`);
     if (section.yCentre > middleThird.top && section.yCentre < middleThird.bottom) {
       e.classList.add("your-active-class");
+      toggleLinkActive(section.id);
     } else {
       e.classList.remove("your-active-class");
     }
