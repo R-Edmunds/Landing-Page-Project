@@ -73,7 +73,6 @@ function addDummySections(n) {
     newSectionElement.setAttribute("data-nav", `Section ${i}`);
     docFragment.appendChild(newSectionElement);
   }
-
   const main = document.querySelector("main");
   main.appendChild(docFragment);
 }
@@ -81,7 +80,7 @@ function addDummySections(n) {
 addDummySections(dummySectionCount);
 
 
-// query all section elements and generate nav links
+// generate nav links from DOM section elements
 function generateLinks() {
   const allSections  = document.querySelectorAll("section");
   const docFragment = document.createDocumentFragment();
@@ -89,11 +88,10 @@ function generateLinks() {
     const newNavItem = document.createElement("li");
     const h2Text = i.querySelector("h2").textContent;
     newNavItem.innerHTML = (
-      `<a href="#${i.id}" class="menu__link">${h2Text}</a>`
+      `<a href="#${i.id}" class="menu__link" data-nav="${h2Text}">${h2Text}</a>`
     );
     docFragment.appendChild(newNavItem);
   }
-
   const nav = document.querySelector("ul#navbar__list");
   nav.appendChild(docFragment);
 }
@@ -128,11 +126,26 @@ function elementActiveToggle() {
 
 
 // Scroll to anchor ID using scrollTO event
-
-
-
-
-
+function scrollToSection(event) {
+  if (event.target.nodeName === "a".toUpperCase()) {
+    event.preventDefault();  // prevent normal href behavior
+    const dataNav = event.target.getAttribute("data-nav");
+    // get all sections, match data-nav, scroll to location
+    const sections = document.querySelectorAll("section");
+    for (section of sections) {
+      if (section.getAttribute("data-nav") === dataNav) {
+        const body = document.querySelector("body");
+        const bodyRect = body.getBoundingClientRect();
+        const sectionRect = section.getBoundingClientRect();
+        const offset = sectionRect.top - bodyRect.top;
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth"
+        });
+      }
+    }
+  }
+}
 
 
 /**
@@ -141,11 +154,18 @@ function elementActiveToggle() {
  *
 */
 
-
 // Scroll to section on link click
+function scrollToSectionEvent() {
+  const nav = document.querySelector("ul#navbar__list");
+  nav.addEventListener("click", function (event) {
+    scrollToSection(event); }
+  );
+}
+
+scrollToSectionEvent()
+
 
 // Set sections as active
-
 function elementActiveEvent() {
   document.addEventListener("scroll", function() {
     window.setTimeout(elementActiveToggle(), 0);
