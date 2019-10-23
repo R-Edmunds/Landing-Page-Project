@@ -102,6 +102,10 @@ section {
     z-index: 5;
 }
 
+.page__header__hide {
+  display: none;
+}
+
 /* Footer Styles */
 .page__footer {
     background: #000;

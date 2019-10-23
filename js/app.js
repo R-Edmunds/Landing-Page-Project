@@ -148,6 +148,21 @@ function scrollToSection(event) {
 }
 
 
+// hide nav bar after n seconds of no scrolling
+
+function hideNav() {
+  // on scroll, make nav visible, start timer. when timer expires hide nav
+  const header = document.querySelector("header.page__header");
+  if (header.classList.contains("page__header__hide")) {
+    header.classList.toggle("page__header__hide");
+    function delayedHide() {
+      header.classList.toggle("page__header__hide");
+    }
+    window.setTimeout(function () {delayedHide()}, 4000);
+  }
+}
+
+
 /**
  * End Main Functions
  * Begin Events
@@ -162,14 +177,24 @@ function scrollToSectionEvent() {
   );
 }
 
-scrollToSectionEvent()
+scrollToSectionEvent();
 
 
 // Set sections as active
 function elementActiveEvent() {
   document.addEventListener("scroll", function() {
-    window.setTimeout(elementActiveToggle(), 0);
+    window.setTimeout(function () {elementActiveToggle()}, 0);
   });
 }
 
 elementActiveEvent();
+
+
+// hide nav on scroll
+function hideNavEvent() {
+  document.addEventListener("scroll", function() {
+    hideNav();
+  });
+}
+
+hideNavEvent();
