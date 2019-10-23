@@ -112,10 +112,11 @@ function elementActiveToggle() {
     return sectionCentres;
   }
 
-  const middleThird = {top: window.innerHeight / 3, bottom: (window.innerHeight / 3) * 2};
+  const viewportHeight = window.innerHeight;
+  const middleHalf = {top: viewportHeight / 4, bottom: (viewportHeight / 4) * 3};
   for (section of getSectionPositions()) {
     const e = document.querySelector(`main section#${section.id}`);
-    if (section.yCentre > middleThird.top && section.yCentre < middleThird.bottom) {
+    if (section.yCentre > middleHalf.top && section.yCentre < middleHalf.bottom) {
       e.classList.add("your-active-class");
       toggleLinkActive(section.id);
     } else {
@@ -136,12 +137,10 @@ function scrollToSection(event) {
       if (section.getAttribute("data-nav") === dataNav) {
         const body = document.querySelector("body");
         const bodyRect = body.getBoundingClientRect();
-        const sectionRect = section.getBoundingClientRect();
-        const offset = sectionRect.top - bodyRect.top;
-        window.scrollTo({
-          top: offset,
-          behavior: "smooth"
-        });
+        const sectionH2 = document.querySelector(`#${section.id} h2`);
+        const sectionH2Rect = sectionH2.getBoundingClientRect();
+        const offset = sectionH2Rect.top - bodyRect.top;
+        window.scrollTo({ top: offset, behavior: "smooth" });
       }
     }
   }
