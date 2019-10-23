@@ -11,7 +11,7 @@
 
 /* ---- Base Rules ---- */
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 body {
@@ -92,6 +92,12 @@ section {
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
+}
+
+.navbar__menu .link__active {
+  background: #333;
+  color: #fff;
+  transition: ease 0.3s all;
 }
 
 /* Header Styles */
