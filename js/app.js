@@ -35,15 +35,14 @@ function getElementPosition(element) {
   return {id: element.id, yCentre: centre};
 }
 
-// toggle link active attr
+// toggle nav link active class
 function toggleLinkActive(id) {
   const anchors = document.querySelectorAll("nav a.menu__link");
   for (anchor of anchors) {
-    const url = anchor.getAttribute("href");
-    if (url === "#" + id) {
+    anchor.classList.remove("link__active");
+    const href = anchor.getAttribute("href");
+    if (href === "#" + id) {
       anchor.classList.add("link__active");
-    } else {
-      anchor.classList.remove("link__active");
     }
   }
 }
@@ -99,11 +98,11 @@ function generateLinks() {
 generateLinks();
 
 
-// Add class 'active' to section when near top of viewport
-// check that the element centre, is inside the middle third of viewport
+// Add "section-active" class to section when visible in viewport
+// check that the element centre, is inside the middle 2 quarters of viewport
 function elementActiveToggle() {
   function getSectionPositions() {
-    // query section, build list from getElementPosition(element) func
+    // get sections, build obj array from getElementPosition(element) func
     const sections = document.querySelectorAll("main section");
     let sectionCentres = [];
     for (i of sections) {
@@ -117,10 +116,10 @@ function elementActiveToggle() {
   for (section of getSectionPositions()) {
     const e = document.querySelector(`main section#${section.id}`);
     if (section.yCentre > middleHalf.top && section.yCentre < middleHalf.bottom) {
-      e.classList.add("your-active-class");
+      e.classList.add("section-active");
       toggleLinkActive(section.id);
     } else {
-      e.classList.remove("your-active-class");
+      e.classList.remove("section-active");
     }
   }
 }
@@ -169,18 +168,18 @@ function hideNav() {
 // Scroll to section on link click
 function scrollToSectionEvent() {
   const nav = document.querySelector("ul#navbar__list");
-  nav.addEventListener("click", function (event) {
-    scrollToSection(event); }
-  );
+  nav.addEventListener("click", function () {
+    window.setTimeout(scrollToSection(event), 0);
+  });
 }
 
 scrollToSectionEvent();
 
 
-// Set sections as active
+// Set sections as active when in viewport
 function elementActiveEvent() {
   document.addEventListener("scroll", function() {
-    window.setTimeout(function () {elementActiveToggle()}, 0);
+    window.setTimeout(elementActiveToggle(), 0);
   });
 }
 
@@ -190,7 +189,7 @@ elementActiveEvent();
 // hide nav on scroll
 function hideNavEvent() {
   document.addEventListener("scroll", function() {
-    hideNav();
+    window.setTimeout(hideNav(), 0);
   });
 }
 
