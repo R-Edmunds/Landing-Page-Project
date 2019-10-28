@@ -126,7 +126,7 @@ function elementActiveToggle() {
 }
 
 
-// Scroll to anchor ID using scrollTO event
+// Scroll to anchor ID using scrollIntoView event
 function scrollToSection(event) {
   if (event.target.nodeName === "a".toUpperCase()) {
     event.preventDefault();  // prevent normal href behavior
@@ -135,12 +135,10 @@ function scrollToSection(event) {
     const sections = document.querySelectorAll("section");
     for (section of sections) {
       if (section.getAttribute("data-nav") === dataNav) {
-        const body = document.querySelector("body");
-        const bodyRect = body.getBoundingClientRect();
-        const sectionH2 = document.querySelector(`#${section.id} h2`);
-        const sectionH2Rect = sectionH2.getBoundingClientRect();
-        const offset = sectionH2Rect.top - bodyRect.top;
-        window.scrollTo({ top: offset, behavior: "smooth" });
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
       }
     }
   }
