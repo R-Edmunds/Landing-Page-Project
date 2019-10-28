@@ -1,17 +1,20 @@
-# Landing Page Project
+# Udacity "Landing Page Project" Front-End Project
+
+### Robin Edmunds 2019
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+* [About](#About)
+* [Instructions](#Instructions)
 * [Plan](#Plan)
+
+## About
+
+This is my first dive into the world of JavaScript and DOM manipulation in the web browser. The dummy sections and nav bar links are generated programmatically on page load. There are also several listener events adding and removing element classes on-the-fly.
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+Open index.html in your favourite web browser, or visit https://getlegit.co.uk/udacity/landing/ for a live version.
 
 ## Plan
 
@@ -24,7 +27,7 @@ For specific, detailed instructions, look at the project instructions in the Uda
 1. Make sections invisible by default
 1. Program sections to appear when the heading is in top half of viewport
 1. Use smooth fade-in for above
-1. When in above visible state, add "active" attribute to respective navigation link
+1. When in above visible state, add "active" ~~attribute~~ class to respective navigation link
 1. Add distinct style for nav link active state
 
 ### Optional
